@@ -3,9 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
         maven { url = "https://repo.spring.io/milestone" }
-        maven { url = "https://repo.spring.io/release" } // временно отключить
+        // maven { url = "https://repo.spring.io/release" } // временно отключить
     }
 }
-
-rootProject.name = 'echohub'
 

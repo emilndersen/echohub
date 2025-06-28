@@ -44,7 +44,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String status;
+    private int status; // 0 - обычный пользователь, 1 - администратор, 2 - заблокированный
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

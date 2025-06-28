@@ -8,5 +8,5 @@ import com.echohub.EchoHub.model.Post;
 import com.echohub.EchoHub.model.User;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-  List<Post> findByUser(User user);  // Получить все посты по ID пользователя
+    List<Post> findByUserId(User user); // Получить все посты по ID пользователя
 }
