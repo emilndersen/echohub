@@ -20,12 +20,6 @@ The goal is to create a simple and user-friendly tool for publishing and managin
 - Spring Boot  
 - Spring Security  
 - JPA / Hibernate  
-- PostgreSQL (or another relational database)
+- PostgreSQL
 
 ---
-
-## How to Run
-
-1. Clone the repository:  
-   ```bash
-   git clone <repository-url>
