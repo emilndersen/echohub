@@ -13,8 +13,6 @@ import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -60,9 +58,8 @@ public class User {
     private String email; // Email address for the user, must be unique
 
     // The status field indicates the user's account status (e.g., active, inactive).
-    @Enumerated(EnumType.STRING) // Use string representation for the enum
     @Column(nullable = false)
-    private Status status; // Account status of the user
+    private String status; // Account status of the user
 
     // Timestamps for creation and last update of the user record
     // The createdAt field is set automatically when the user is created.
@@ -74,35 +71,21 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt; // Timestamp for when the user was last updated
 
-    // Relationships to other entities
-    // The roles field represents the many-to-many relationship between users and roles.
-    // The comments field represents the one-to-many relationship between users and comments.
-    // Both fields are lazily loaded and cascade all operations, with orphan removal enabled.
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
-    // The roles field is a set of UserRole entities associated with this user.
-    // It is initialized to an empty set by default.
     private Set<UserRole> roles = new HashSet<>();
 
-    // The comments field is a set of Comment entities associated with this user.
-    // It is initialized to an empty set by default.
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Comment> comments = new HashSet<>() ;
     
 
-    // Lifecycle methods to automatically set timestamps for creation and updates
-    // These methods are called by the JPA provider before persisting or updating the entity.
     @PrePersist
-    // This method is called before the entity is persisted to the database.
-    // It sets the createdAt and updatedAt fields to the current time.
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();   
     }
 
-    // This method is called before the entity is updated in the database.
-    // It updates the updatedAt field to the current time.
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();

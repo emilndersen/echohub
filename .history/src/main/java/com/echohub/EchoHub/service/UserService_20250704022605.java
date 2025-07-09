@@ -2,6 +2,10 @@ package com.echohub.EchoHub.service;
 import java.util.List;
 
 import com.echohub.EchoHub.model.User;
+
+
+
+
 public class UserService {
 
     // Example method to get a user by ID

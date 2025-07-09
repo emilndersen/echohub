@@ -13,8 +13,6 @@ import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -60,9 +58,8 @@ public class User {
     private String email; // Email address for the user, must be unique
 
     // The status field indicates the user's account status (e.g., active, inactive).
-    @Enumerated(EnumType.STRING) // Use string representation for the enum
     @Column(nullable = false)
-    private Status status; // Account status of the user
+    private String status; // Account status of the user
 
     // Timestamps for creation and last update of the user record
     // The createdAt field is set automatically when the user is created.
