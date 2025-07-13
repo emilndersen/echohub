@@ -29,7 +29,7 @@ public class UserService{
     // This method adds a new user by saving the username to the repository.
     // It takes a username as a parameter and does not return anything.
     public void addUser(String username) {
-        userRepository.findByUsername(username);
+        userRepository.saveUsername(username);
 
         User user = new User();
         user.setUsername(username);

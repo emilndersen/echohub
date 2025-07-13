@@ -1,6 +1,4 @@
 package com.echohub.EchoHub.service;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.echohub.EchoHub.model.Post;
@@ -20,15 +18,11 @@ public class PostService {
     public Post createPost(String content) {
         Post post = new Post();
         post.setContent(content);
-        if (content == null || content.trim().isEmpty()) {
-            throw new IllegalArgumentException("Content cannot be empty");
-        }
-
         return postRepository.save(post);
     }
 
     // This method retrieves a post by its ID.
-    public Optional<Post> getPostById(Long id) {
-        return postRepository.findById(id);
+    public Post getPostById(Long id) {
+        return postRepository.findById(id).orElse(null);
     }
 }

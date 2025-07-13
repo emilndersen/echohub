@@ -1,12 +1,10 @@
-package com.echohub.EchoHub.service;
-
-import java.util.Optional;
+ package com.echohub.EchoHub.service;
 
 import org.springframework.stereotype.Service;
 
 import com.echohub.EchoHub.model.Tag;
 import com.echohub.EchoHub.repository.TagRepository;
-@Service
+ @Service
 public class TagService {
     
     // This service class handles operations related to tags.
@@ -26,7 +24,7 @@ public class TagService {
     }
 
     // This method retrieves a tag by its name.
-    Optional<Tag> getTagByName(String name) {
-        return tagRepository.findByName(name);
+    public Tag getTagByName(String name) {
+        return tagRepository.findByName(name).orElse(null);
     }
 }

@@ -28,19 +28,15 @@ public class CommentService {
 
     // This method updates an existing comment.
     public Comment updateComment(Long id, String content) {
-        // First, we check if the comment exists by its ID.
         Optional<Comment> optionalComment = commentRepository.findById(id);
         if (optionalComment.isPresent()) {
             Comment comment = optionalComment.get();
             comment.setContent(content);
             return commentRepository.save(comment);
         } else {
-            // If the comment does not exist, we throw an exception.
             throw new IllegalArgumentException("Comment not found with id: " + id);
         }
     }
-
-    // This method deletes a comment by its ID.
     public void deleteComment(Long id) {
         commentRepository.deleteById(id);
     }
