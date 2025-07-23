@@ -16,6 +16,7 @@ import com.echohub.EchoHub.model.Post;
 import com.echohub.EchoHub.service.PostService;
 
 
+
 @RestController
 @RequestMapping("/posts")
 public class PostController {

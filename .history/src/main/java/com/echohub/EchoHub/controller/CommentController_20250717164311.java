@@ -16,8 +16,5 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    // This controller handles HTTP requests related to Comment entities.
-    
-
     // Additional methods for handling comment operations will be added here.
 }

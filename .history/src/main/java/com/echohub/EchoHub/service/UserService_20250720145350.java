@@ -45,6 +45,6 @@ public class UserService{
         if (username != null && !username.isEmpty()) {
             return userRepository.findByUsername(username);
         }
-        return Optional.empty();
+        return Optional.ofNullable(userRepository.findAll());
     }
 }

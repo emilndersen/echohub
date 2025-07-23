@@ -3,17 +3,17 @@ package com.echohub.EchoHub.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.echohub.EchoHub.model.Post;
 import com.echohub.EchoHub.service.PostService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -49,13 +49,4 @@ public class PostController {
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    @DeleteMapping
-    public ResponseEntity<Void> deletePost(@PathVariable Long id){
-        if((boolean) postService.deletePost(id)){
-            return ResponseEntity.noContent().build();
-        }else{
-            return ResponseEntity.notFound().build();
-        }
-    }
-
 }

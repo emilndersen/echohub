@@ -41,10 +41,10 @@ public class UserService{
         return userRepository.findById(id).orElse(null);
     }
 
-    public Optional<User> getAllUsers(String username) {
+    public Optional<List<User>> getAllUsers(String username) {
         if (username != null && !username.isEmpty()) {
-            return userRepository.findByUsername(username);
+            return Optional.empty();
         }
-        return Optional.empty();
+        return Optional.ofNullable(userRepository.findAll());
     }
 }

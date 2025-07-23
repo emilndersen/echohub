@@ -1,5 +1,4 @@
 package com.echohub.EchoHub.service;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -39,19 +38,10 @@ public class PostService {
     }
 
     // This method deletes a post by its ID.
-    public boolean deletePost(Long id) {
+    public void deletePost(Long id) {
         if (!postRepository.existsById(id)) {
             throw new IllegalArgumentException("Post with ID " + id + " does not exist");
         }
         postRepository.deleteById(id);
-        return false;
-    }
-
-    public Optional<Post> updatePost(Long id, Post post) {
-        if (!postRepository.existsById(id)) {
-            return Optional.empty();
-        }
-        post.setId(id);
-        return Optional.of(postRepository.save(post));
     }
 }

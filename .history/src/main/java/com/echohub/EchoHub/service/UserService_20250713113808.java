@@ -1,6 +1,5 @@
 package com.echohub.EchoHub.service;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -35,16 +34,6 @@ public class UserService{
         user.setEmail(username + "@example.com"); // Set a default email or handle it as needed
         user.setStatus(Status.ACTIVE); // Set a default status or handle it as needed
         userRepository.save(user); // Save the user entity to the repository
-    }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    public Optional<User> getAllUsers(String username) {
-        if (username != null && !username.isEmpty()) {
-            return userRepository.findByUsername(username);
-        }
-        return Optional.empty();
     }
 }

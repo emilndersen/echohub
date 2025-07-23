@@ -1,6 +1,5 @@
 package com.echohub.EchoHub.service;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -39,12 +38,5 @@ public class UserService{
 
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
-    }
-
-    public Optional<User> getAllUsers(String username) {
-        if (username != null && !username.isEmpty()) {
-            return userRepository.findByUsername(username);
-        }
-        return Optional.empty();
     }
 }
