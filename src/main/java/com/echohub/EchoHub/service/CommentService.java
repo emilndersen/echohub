@@ -1,5 +1,6 @@
 package com.echohub.EchoHub.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -44,4 +45,11 @@ public class CommentService {
     public void deleteComment(Long id) {
         commentRepository.deleteById(id);
     }
+
+
+    public List <Comment> getAllComments() {
+        // This method retrieves all comments from the repository.
+        return commentRepository.findAll();
+    }
+    
 }

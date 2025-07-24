@@ -47,4 +47,37 @@ public class UserService{
         }
         return Optional.empty();
     }
+
+    public Optional<User> searchUsers(String query) {
+        // This method searches for users based on a query string.
+        // It uses the UserRepository to perform the search and returns the results.
+        return userRepository.findByUsername(query);
+    }
+
+    public Optional<User> createUser(String username){
+        // This method creates a new user with the provided username.
+        // It uses the UserRepository to save the user and returns the created user.
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword("defaultPassword"); // Set a default password or handle it as needed
+        user.setEmail(username + "@example.com"); // Set a default email or handle it as needed
+        user.setStatus(Status.ACTIVE); // Set a default status or handle it as needed
+        return Optional.of(userRepository.save(user));
+    }
+
+    public Optional<User> updateUser(Long id, User user){
+        if(!userRepository.existsById(id)) {
+            return Optional.empty();
+        }
+        user.setId(id);
+        return Optional.of(userRepository.save(user));
+    }
+
+    public boolean deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("User with ID " + id + " does not exist");
+        }
+        userRepository.deleteById(id);
+        return true;
+    }
 }
