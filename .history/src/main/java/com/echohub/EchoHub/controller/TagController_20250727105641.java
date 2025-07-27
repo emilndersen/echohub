@@ -59,13 +59,12 @@ public class TagController {
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<Void> deleteTag(@PathVariable Long id, @PathVariable String name) {
+    public ResponseEntity<Void> deleteTag(@PathVariable String name) {
         // This method deletes a tag by its name.
         try {
-            tagService.deleteTag(id);
+            tagService.deleteTag(name);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
-    }
 }

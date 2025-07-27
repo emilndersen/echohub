@@ -49,14 +49,12 @@ public class PostController {
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    @DeleteMapping
-    public ResponseEntity<Void> deletePost(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id, @RequestBody Post post) {
         if((boolean) postService.deletePost(id)){
             return ResponseEntity.noContent().build();
         }else{
             return ResponseEntity.notFound().build();
         }
     }
-
-    
 }

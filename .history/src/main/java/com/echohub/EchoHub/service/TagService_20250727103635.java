@@ -1,12 +1,11 @@
 package com.echohub.EchoHub.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+
 import com.echohub.EchoHub.model.Tag;
 import com.echohub.EchoHub.repository.TagRepository;
-
 @Service
 public class TagService {
     
@@ -39,21 +38,5 @@ public class TagService {
             // If a name is provided, filter tags by name.
             return tagRepository.findByNameContainingIgnoreCase(name);
         }
-    }
-
-    public Optional<Tag> updateTag(String name, Tag tag){
-        return tagRepository.findByName(name)
-            .map(existingTag -> {
-                existingTag.setName(tag.getName());
-                return tagRepository.save(existingTag);
-            });
-    }
-
-    public boolean deleteTag(Long id) {
-        if (!tagRepository.existsById(id)) {
-            throw new IllegalArgumentException("Tag with ID " + id + " does not exist");
-        }
-        tagRepository.deleteById(id);
-        return true;
     }
 }

@@ -51,12 +51,11 @@ public class PostController {
     
     @DeleteMapping
     public ResponseEntity<Void> deletePost(@PathVariable Long id){
-        if((boolean) postService.deletePost(id)){
+        if((boolean) postService.deletePost(id, null)){
             return ResponseEntity.noContent().build();
         }else{
             return ResponseEntity.notFound().build();
         }
     }
 
-    
 }

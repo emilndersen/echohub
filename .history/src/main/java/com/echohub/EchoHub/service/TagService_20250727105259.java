@@ -48,12 +48,4 @@ public class TagService {
                 return tagRepository.save(existingTag);
             });
     }
-
-    public boolean deleteTag(Long id) {
-        if (!tagRepository.existsById(id)) {
-            throw new IllegalArgumentException("Tag with ID " + id + " does not exist");
-        }
-        tagRepository.deleteById(id);
-        return true;
-    }
 }

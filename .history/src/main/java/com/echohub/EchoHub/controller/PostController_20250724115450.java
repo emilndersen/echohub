@@ -49,7 +49,7 @@ public class PostController {
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id){
         if((boolean) postService.deletePost(id)){
             return ResponseEntity.noContent().build();
@@ -58,5 +58,4 @@ public class PostController {
         }
     }
 
-    
 }

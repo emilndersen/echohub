@@ -49,9 +49,9 @@ public class TagService {
             });
     }
 
-    public boolean deleteTag(Long id) {
-        if (!tagRepository.existsById(id)) {
-            throw new IllegalArgumentException("Tag with ID " + id + " does not exist");
+    public boolean deleteTag(String name) {
+        if (!tagRepository.existsByName(name)) {
+            throw new IllegalArgumentException("Tag with name " + name + " does not exist");
         }
         tagRepository.deleteById(id);
         return true;
