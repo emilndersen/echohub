@@ -10,6 +10,11 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.InMemoryUserDetailsManagerConfigurer;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.UserDetailsManagerConfigurer;
+import org.springframework.security.config.annotation.authentication.configurers.provisioning.UserDetailsManagerConfigurer.UserDetailsBuilder;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -90,6 +95,19 @@ public class User {
     @Builder.Default
     private Set<Comment> comments = new HashSet<>() ;
     
+    public User(String username, String password, String email, Status status) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.status = status;
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static UserDetailsBuilder withDefaultPasswordEncoder() {
+    // TODO Auto-generated method stub
+    // This method is used to create a UserDetailsBuilder with a default password encoder.
+        throw new UnsupportedOperationException("Unimplemented method 'withDefaultPasswordEncoder'");
+    }
 
     // Lifecycle methods to automatically set timestamps for creation and updates
     // These methods are called by the JPA provider before persisting or updating the entity.
