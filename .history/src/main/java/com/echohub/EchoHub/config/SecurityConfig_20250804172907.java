@@ -10,7 +10,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig{
 
     @Bean
     public PasswordEncoder passwordEncoder() {

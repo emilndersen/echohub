@@ -104,7 +104,7 @@ public class User {
     // It sets the createdAt and updatedAt fields to the current time.
     protected void onCreate() {
         createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();   
     }
 
     // This method is called before the entity is updated in the database.
