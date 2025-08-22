@@ -10,5 +10,7 @@ public class EchoHubApplication {
 		SpringApplication.run(EchoHubApplication.class, args);
 		System.out.println("EchoHub Application has started successfully!");
 		System.out.println("Visit http://localhost:8080 to access the application.");
+
+		
 	}
 }

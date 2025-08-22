@@ -61,10 +61,11 @@ public class CommentController {
     @DeleteMapping("/{comments}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long comments) {
         try {
-            commentService.deleteComment(comments);
+            commentService.deleteComment(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();
         }
     }
+
 }
