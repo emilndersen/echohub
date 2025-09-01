@@ -25,4 +25,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // Custom query to find a user by email with roles eagerly fetched
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email = ?1")
     Optional<User> findByEmailWithRoles(String email);
+
+    List<User> findByUsernameContainingIgnoreCase(String username);
 }

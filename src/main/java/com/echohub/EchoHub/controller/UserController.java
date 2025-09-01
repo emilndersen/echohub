@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.echohub.EchoHub.model.User;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -42,16 +43,16 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(@PathVariable(required = false) String username) {
-        // This method retrieves all users or filters by username if provided.
-        // It uses the UserService to fetch the list of users from the database.
-        Optional<List<User>> users = Optional.empty();
-        return ResponseEntity.ok(users.orElseGet(List::of));
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) String username) {
+        return ResponseEntity.ok(userService.getUsers(username));
     }
+
+
     
     @GetMapping("/search")
-    public ResponseEntity<Optional<User>> searchUsers(@PathVariable String query) {
+    public ResponseEntity<Optional<User>> searchUsers(@RequestParam String query) {
         // This method searches for users based on a query string.
         // It uses the UserService to perform the search and returns the results.
         Optional<User> users = userService.searchUsers(query);
@@ -59,23 +60,22 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Optional<User>> createUser(@RequestBody User user){
-        return ResponseEntity.ok(userService.createUser(user.getUsername()));
+    public ResponseEntity<User> createUser(@RequestBody User user){
+        User savedUser = userService.createUser(user);
+        return ResponseEntity.ok(savedUser);
+    }
+    
+    @PostMapping("/add")
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        User savedUser = userService.addUser(user);
+        return ResponseEntity.ok(savedUser);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Void> addUser(@RequestBody String username) {
-        // This method adds a new user by saving the username to the repository.
-        // It takes a username as a parameter and does not return anything.
-        userService.addUser(username);
-        return ResponseEntity.ok().build();
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user){
-        return userService.updateUser(id, user)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
+        User updatedUser = userService.updateUser(id, user);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")

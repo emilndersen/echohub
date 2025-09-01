@@ -1,11 +1,12 @@
 package com.echohub.EchoHub.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import com.echohub.EchoHub.model.Tag;
 import com.echohub.EchoHub.repository.TagRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class TagService {
@@ -27,8 +28,9 @@ public class TagService {
     }
 
     // This method retrieves a tag by its name.
-    public Optional<Tag> getTagByName(String name) {
-        return tagRepository.findByName(name);
+    public Tag getTagByName(String name) {
+        return tagRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Tag with name '" + name + "' not found"));
     }
 
     public List<Tag> getAllTags(String name){
@@ -41,12 +43,11 @@ public class TagService {
         }
     }
 
-    public Optional<Tag> updateTag(String name, Tag tag){
-        return tagRepository.findByName(name)
-            .map(existingTag -> {
-                existingTag.setName(tag.getName());
-                return tagRepository.save(existingTag);
-            });
+    public Tag updateTag(String name, Tag tag) {
+        Tag existingTag = tagRepository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Tag with name '" + name + "' not found"));
+        existingTag.setName(tag.getName());
+        return tagRepository.save(existingTag);
     }
 
     public boolean deleteTag(Long id) {

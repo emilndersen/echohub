@@ -1,11 +1,12 @@
 package com.echohub.EchoHub.service;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.echohub.EchoHub.model.Post;
 import com.echohub.EchoHub.repository.PostRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class PostService {
@@ -29,8 +30,9 @@ public class PostService {
     }
 
     // This method retrieves a post by its ID.
-    public Optional<Post> getPostById(Long id) {
-        return postRepository.findById(id);
+    public Post getPostById(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post with ID " + id + " not found"));
     }
 
     // This method retrieves all posts.
@@ -47,11 +49,16 @@ public class PostService {
         return false;
     }
 
-    public Optional<Post> updatePost(Long id, Post post) {
-        if (!postRepository.existsById(id)) {
-            return Optional.empty();
-        }
-        post.setId(id);
-        return Optional.of(postRepository.save(post));
+    public Post updatePost(Long id, Post post) {
+        Post existingPost = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post with ID " + id + " not found"));
+
+        // Обновляем поля
+        existingPost.setTitle(post.getTitle());
+        existingPost.setContent(post.getContent());
+        existingPost.setTags(post.getTags());
+        // и другие поля по необходимости
+
+        return postRepository.save(existingPost);
     }
 }

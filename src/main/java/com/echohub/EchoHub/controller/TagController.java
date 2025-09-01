@@ -38,11 +38,9 @@ public class TagController {
     }
         
     @GetMapping("/{name}")
-    public ResponseEntity<Tag> getTagByName(@RequestParam String name) {
+    public ResponseEntity<Tag> getTagByName(@PathVariable String name) {
         // This method retrieves a tag by its name.
-        return tagService.getTagByName(name)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(tagService.getTagByName(name));
     }
 
     @PostMapping
@@ -53,13 +51,11 @@ public class TagController {
 
     @PutMapping("/{name}")
     public ResponseEntity<Tag> updateTag(@PathVariable String name, @RequestBody Tag tag){
-        return tagService.updateTag(name, tag)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(tagService.updateTag(name, tag));
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<Void> deleteTag(@PathVariable Long id, @PathVariable String name) {
+    public ResponseEntity<Void> deleteTag(@PathVariable Long id) {
         // This method deletes a tag by its name.
         try {
             tagService.deleteTag(id);

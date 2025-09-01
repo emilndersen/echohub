@@ -38,7 +38,7 @@ public class CommentController {
     }
     
 
-    @GetMapping("/{comments}")
+    @GetMapping("/{id}")
     public ResponseEntity<Comment> getCommentById(@PathVariable Long id){
         return commentService.getCommentById(id)
                 .map(ResponseEntity::ok)
@@ -50,18 +50,18 @@ public class CommentController {
         return ResponseEntity.ok(commentService.saveComment(comment));
     }
 
-    @PutMapping("{comments}")
-    public ResponseEntity<Comment> updateComment(@PathVariable Long comments, @RequestBody String content) {
-        Comment updated = commentService.updateComment(comments, content);
+    @PutMapping("/{id}")
+    public ResponseEntity<Comment> updateComment(@PathVariable Long id, @RequestBody String content) {
+        Comment updated = commentService.updateComment(id, content);
         return updated != null
                 ? ResponseEntity.ok(updated)
                 : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{comments}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long comments) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         try {
-            commentService.deleteComment(comments);
+            commentService.deleteComment(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.notFound().build();

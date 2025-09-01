@@ -8,6 +8,8 @@ import com.echohub.EchoHub.model.Status;
 import com.echohub.EchoHub.model.User;
 import com.echohub.EchoHub.repository.UserRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService{
 
@@ -41,11 +43,13 @@ public class UserService{
         return userRepository.findById(id).orElse(null);
     }
 
-    public Optional<User> getAllUsers(String username) {
-        if (username != null && !username.isEmpty()) {
-            return userRepository.findByUsername(username);
+ public List<User> getUsers(String username) {
+        if (username == null || username.isBlank()) {
+            return userRepository.findAll(); // все пользователи
+        } else {
+            return userRepository.findByUsernameContainingIgnoreCase(username); 
+            // ищет по подстроке (пример, зависит от репозитория)
         }
-        return Optional.empty();
     }
 
     public Optional<User> searchUsers(String query) {
@@ -54,24 +58,46 @@ public class UserService{
         return userRepository.findByUsername(query);
     }
 
-    public Optional<User> createUser(String username){
-        // This method creates a new user with the provided username.
-        // It uses the UserRepository to save the user and returns the created user.
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword("defaultPassword"); // Set a default password or handle it as needed
-        user.setEmail(username + "@example.com"); // Set a default email or handle it as needed
-        user.setStatus(Status.ACTIVE); // Set a default status or handle it as needed
-        return Optional.of(userRepository.save(user));
+    public User createUser(User user) {
+        // Если нужно, можно добавить валидацию или проверку уникальности
+        if (user.getPassword() == null) {
+            user.setPassword("defaultPassword"); // Можно оставить дефолт, если пароль не указан
+        }
+        if (user.getEmail() == null) {
+            user.setEmail(user.getUsername() + "@example.com");
+        }
+        if (user.getStatus() == null) {
+            user.setStatus(Status.ACTIVE);
+        }
+        return userRepository.save(user);
     }
 
-    public Optional<User> updateUser(Long id, User user){
-        if(!userRepository.existsById(id)) {
-            return Optional.empty();
+    public User addUser(User user) {
+        // Можно задать значения по умолчанию, если какие-то поля null
+        if (user.getPassword() == null) {
+            user.setPassword("defaultPassword"); // или хэшировать
         }
-        user.setId(id);
-        return Optional.of(userRepository.save(user));
+        if (user.getStatus() == null) {
+            user.setStatus(Status.ACTIVE);
+        }
+        if (user.getEmail() == null && user.getUsername() != null) {
+            user.setEmail(user.getUsername() + "@example.com");
+        }
+
+        // Сохраняем пользователя в репозиторий
+        return userRepository.save(user);
     }
+
+    public User updateUser(Long id, User user) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User with ID " + id + " not found"));
+        existingUser.setUsername(user.getUsername());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setStatus(user.getStatus());
+        return userRepository.save(existingUser);
+    }
+
 
     public boolean deleteUser(Long id) {
         if (!userRepository.existsById(id)) {

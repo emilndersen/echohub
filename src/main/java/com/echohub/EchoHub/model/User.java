@@ -106,7 +106,6 @@ public class User {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
-
     // This method is called before the entity is updated in the database.
     // It updates the updatedAt field to the current time.
     @PreUpdate
